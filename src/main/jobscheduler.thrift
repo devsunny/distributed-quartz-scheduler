@@ -2,7 +2,7 @@ namespace java com.asksunny.wm.protocol
 namespace cpp com.asksunny.wm.protocol
 namespace py WM.protocol
 namespace perl WM.protocol
-namespace ruby WM.protocol
+namespace rb WM.protocol
 
 
 enum Compression{	
@@ -56,8 +56,6 @@ struct NodeInfo
 
 
 
-
-
 struct RemoteJob {
 	1: required string jobid,	
 	3: required map<string, string> jobData,
@@ -77,7 +75,7 @@ struct NodeConfig {
 
 
 struct JobStatus {
-	
+	1: required string workDirectory,
 }
 
 
@@ -91,7 +89,7 @@ service WorkloadManager
 	* When worker register with Master/Manager, master send basic configuration info to worker to allow 
 	* central control of configuration
 	*/
-	NodeConfig register(NodeInfo nodeInfo),
+	NodeConfig registerNode(1: NodeInfo nodeInfo),
 	
 	
 	/**
@@ -100,19 +98,23 @@ service WorkloadManager
 	list<NodeInfo> getClusterInfo(),
 	
 	
+	
 	/**
 	*This is used for worker to request job from server.
 	*/
-	RemoteJob requestForJob(NodeInfo nodeInfo),	
+	RemoteJob requestForJob(1: NodeInfo nodeInfo),	
 	
 	
 	/**
 	* The follow methods are available in worker node to allow master to assign, cancel and suspend job
 	**/
-	JobStatus assignJob(RemoteJob jobInfo),
-	JobStatus cancelJob(RemoteJob jobInfo),
-	JobStatus suspendJob(RemoteJob jobInfo),
-	JobStatus status(RemoteJob jobInfo),
-		
+	JobStatus assignJob(1: RemoteJob jobInfo),
+	
+	JobStatus cancelJob(1: RemoteJob jobInfo),
+	
+	JobStatus suspendJob(1: RemoteJob jobInfo),
+	
+	JobStatus status(1: RemoteJob jobInfo),
+			
 
 }
