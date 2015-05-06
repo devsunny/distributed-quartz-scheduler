@@ -59,13 +59,13 @@ struct NodeInfo
 
 
 struct RemoteJob {
-	1: required string jobid,
-	2: required string executablePath,
+	1: required string jobid,	
 	3: required map<string, string> jobData,
 	4: required bool suspendible,
-	8: required language 
-	9: optional binary jobBinary,
-	10: optional Compression compression,	
+	8: optional i32 language 	
+	15: optional string executablePath,
+	18: optional binary jobBinary,
+	20: optional Compression compression,	
 }
 
 
